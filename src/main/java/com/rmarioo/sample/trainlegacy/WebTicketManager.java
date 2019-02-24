@@ -1,5 +1,8 @@
 package com.rmarioo.sample.trainlegacy;
 
+import com.rmarioo.sample.trainlegacy.external.BookingReferenceService;
+import com.rmarioo.sample.trainlegacy.external.TrainDataService;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ public class WebTicketManager {
         String bookingRef;
 
         // get the train
-        String JsonTrain = trainDataService.invoke(trainId);
+        String JsonTrain = trainDataService.findTrain(trainId);
 
         result = JsonTrain;
 
@@ -47,7 +50,8 @@ public class WebTicketManager {
             if (count != seats) {
                 return String.format("{{\"train_id\": \"%s\", \"booking_reference\": \"\", \"seats\": []}}",
                         trainId);
-            } else {
+            }
+            else {
                 bookingRef = bookingReferenceService.createbookingRef();
                 
                 for (Seat availableSeat : availableSeats) {

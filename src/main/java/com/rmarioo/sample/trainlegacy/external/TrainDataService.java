@@ -1,9 +1,12 @@
-package com.rmarioo.sample.trainlegacy;
+package com.rmarioo.sample.trainlegacy.external;
 
 import static java.util.Arrays.asList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rmarioo.sample.trainlegacy.SeatJson;
+import com.rmarioo.sample.trainlegacy.TrainJson;
+import com.rmarioo.sample.trainlegacy.Trains;
 
 public class TrainDataService {
 
@@ -15,7 +18,7 @@ public class TrainDataService {
     TrainJson trainJson = new TrainJson();
     trainJson.seats =
         asList(newSeatJson(1, "A"),newSeatJson(2, "A"),newSeatJson(3, "A"),newSeatJson(4, "A"),
-               newSeatJson(2, "B"),newSeatJson(2, "B"),newSeatJson(3, "B"),newSeatJson(4, "B"));
+               newSeatJson(1, "B"),newSeatJson(2, "B"),newSeatJson(3, "B"),newSeatJson(4, "B"));
 
     trains.addTrain("first", trainJson);
     return trains;
@@ -29,30 +32,12 @@ public class TrainDataService {
     return seatJson;
   }
 
-  public String invoke(String train)
+  public String findTrain(String train)
     {
-
       TrainJson trainJson = trains.find(train);
 
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-
       String s = toString(trainJson);
-
-
       System.out.println(s);
-
-
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
-      System.out.println("*********");
       return s;
 /*
       return "{\"seats\": {\"1A\": {\"booking_reference\": \"\", \"seat_number\": \"1\", " + "\"coach\": \"A\"}," +
