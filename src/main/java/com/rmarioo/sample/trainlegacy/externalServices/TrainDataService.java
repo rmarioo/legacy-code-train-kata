@@ -1,4 +1,4 @@
-package com.rmarioo.sample.trainlegacy.external;
+package com.rmarioo.sample.trainlegacy.externalServices;
 
 import static java.util.Arrays.asList;
 

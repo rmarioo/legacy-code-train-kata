@@ -15,6 +15,7 @@ public class ReservationsController {
 
     @PostMapping("api/reservations")
     public String update(@RequestBody RequestDto requestDto) throws IOException {
+        WebTicketManager.fromTestEnvironment = false;
         WebTicketManager webTicketManager = new WebTicketManager();
         return webTicketManager.reserve(requestDto.getTrain_id(), requestDto.getNumber_of_seats());
     }
