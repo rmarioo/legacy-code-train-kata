@@ -1,11 +1,13 @@
 package com.rmarioo.sample.trainlegacy.externalServices;
 
-import static com.rmarioo.sample.trainlegacy.WebTicketManager.fromTestEnvironment;
+import static com.rmarioo.sample.trainlegacy.TrainApplication.fromTestEnvironment;
+
+import com.rmarioo.sample.trainlegacy.Train;
 
 public class TrainDataAPI {
 
 
-  public static String findTrain(String trainId) {
+  public static Train findTrain(String trainId) {
 
     if (fromTestEnvironment)
       throw new RuntimeException("External service should not be called directly from unit Test");

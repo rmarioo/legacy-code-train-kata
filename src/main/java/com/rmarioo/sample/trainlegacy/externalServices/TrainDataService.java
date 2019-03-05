@@ -2,10 +2,8 @@ package com.rmarioo.sample.trainlegacy.externalServices;
 
 import static java.util.Arrays.asList;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rmarioo.sample.trainlegacy.SeatJson;
-import com.rmarioo.sample.trainlegacy.TrainJson;
+import com.rmarioo.sample.trainlegacy.Seat;
+import com.rmarioo.sample.trainlegacy.Train;
 import com.rmarioo.sample.trainlegacy.Trains;
 
 public class TrainDataService {
@@ -15,47 +13,19 @@ public class TrainDataService {
   private static Trains initializeTrains() {
 
     Trains trains = new Trains();
-    TrainJson trainJson = new TrainJson();
-    trainJson.seats =
-        asList(newSeatJson(1, "A"),newSeatJson(2, "A"),newSeatJson(3, "A"),newSeatJson(4, "A"),
-               newSeatJson(1, "B"),newSeatJson(2, "B"),newSeatJson(3, "B"),newSeatJson(4, "B"));
-
-    trains.addTrain("first", trainJson);
+    trains.addTrain("first",
+        new Train(
+        asList(
+            new Seat("A",1),new Seat("A",2),new Seat("A",3),new Seat("A", 4),
+            new Seat("B",1),new Seat("B",2),new Seat("B",3),new Seat("B", 4)
+            )));
     return trains;
   }
 
-  private static SeatJson newSeatJson(int seatNumber, String coach) {
-    SeatJson seatJson = new SeatJson();
-    seatJson.booking_reference="";
-    seatJson.coach= coach;
-    seatJson.seat_number=""+ seatNumber;
-    return seatJson;
-  }
-
-  public String findTrain(String train)
+  public Train findTrain(String trainId)
     {
-      TrainJson trainJson = trains.find(train);
-
-      String s = toString(trainJson);
-      System.out.println(s);
-      return s;
-/*
-      return "{\"seats\": {\"1A\": {\"booking_reference\": \"\", \"seat_number\": \"1\", " + "\"coach\": \"A\"}," +
-                          " \"2A\": {\"booking_reference\": \"\", \"seat_number\": \"2\", " + "\"coach\": \"A\"}}}";
-*/
-
+      return trains.find(trainId);
 
     }
-
-  private String toString(TrainJson trainJson) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    String s;
-    try {
-      s = objectMapper.writeValueAsString(trainJson);
-    } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
-    }
-    return s;
-  }
 
 }

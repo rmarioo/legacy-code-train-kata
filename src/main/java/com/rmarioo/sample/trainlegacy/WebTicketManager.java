@@ -1,28 +1,28 @@
 package com.rmarioo.sample.trainlegacy;
 
 import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
+import com.rmarioo.sample.trainlegacy.externalServices.Reservation;
 import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WebTicketManager
 {
-    public static boolean fromTestEnvironment = true;
 
-    public String reserve(String trainId, int seats) throws IOException {
+    public Reservation reserve(String trainId, int seats) throws IOException {
         List<Seat> availableSeats = new ArrayList<Seat>();
         int count = 0;
-        String result = "";
+        Train result;
         String bookingRef;
 
         // get the train
-        String JsonTrain = TrainDataAPI.findTrain(trainId);
+        Train trainInst = TrainDataAPI.findTrain(trainId);
 
-        result = JsonTrain;
+        result = trainInst;
 
-        Train trainInst = new Train(JsonTrain);
         if ((trainInst.ReservedSeats + seats) <= Math.floor(0.70 * trainInst.getMaxSeat())) {
             int numberOfReserv = 0;
             // find seats to reserve
@@ -43,8 +43,7 @@ public class WebTicketManager
             int reservedSets = 0;
 
             if (count != seats) {
-                return String.format("{{\"train_id\": \"%s\", \"booking_reference\": \"\", \"seats\": []}}",
-                        trainId);
+                return new Reservation(trainId,"", Arrays.asList());
             }
             else {
                 bookingRef = BookingReferenceAPI.createbookingRef();
@@ -69,7 +68,8 @@ public class WebTicketManager
             }
 
         }
-        return String.format("{{\"train_id\": \"%s\", \"booking_reference\": \"\", \"seats\": []}}", trainId);
+
+       return new Reservation(trainId,"", Arrays.asList());
     }
 
 

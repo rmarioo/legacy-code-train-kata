@@ -10,6 +10,16 @@ public class Train {
     public int ReservedSeats;
     public List<Seat> Seats;
 
+    public Train(List<Seat> seats) {
+        Seats = seats;
+        for (Seat seat : seats) {
+            if (seat.getBookingRef() !="")
+                ReservedSeats ++;
+        }
+    }
+
+
+
     public Train(String trainTopol) throws IOException {
 
         final ObjectMapper objectMapper = new ObjectMapper();

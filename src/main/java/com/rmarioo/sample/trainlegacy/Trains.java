@@ -5,13 +5,26 @@ import java.util.Map;
 
 public class Trains
 {
-  private Map<String, TrainJson> trainsMap = new HashMap<>();
+  private Map<String, Train> trainsMap = new HashMap<>();
 
-  public TrainJson find(String trainId) {
+  public Train find(String trainId) {
      return trainsMap.get(trainId);
   }
 
-  public void addTrain(String trainId, TrainJson trainJson) {
-    trainsMap.put(trainId,trainJson);
+  public void addTrain(String trainId, Train train) {
+    trainsMap.put(trainId,train);
+  }
+
+  public void deleteAllTrainReservations() {
+    trainsMap.values().stream().forEach(train -> resetReservations(train));
+  }
+
+  private void resetReservations(Train train) {
+
+    train.Seats.stream().forEach(seat -> seat.setBookingRef(""));
+  }
+
+  public Map<String, Train> getTrainsMap() {
+    return trainsMap;
   }
 }
