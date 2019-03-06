@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BookingReferenceService {
 
-    private final AtomicLong counter = new AtomicLong();
+    private static final AtomicLong counter = new AtomicLong();
 
     public Reservation reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
 
@@ -43,7 +43,7 @@ public class BookingReferenceService {
 
 
     public String createbookingRef() {
-        return String.valueOf(counter.incrementAndGet());
+        return "booking_ref_"+ counter.incrementAndGet();
     }
 
     public void deleteReservations() {
@@ -67,7 +67,7 @@ public class BookingReferenceService {
         List<Seat> seats = train.Seats;
         for (Seat seat : seats) {
             String bookingRef = seat.getBookingRef();
-            if (bookingRef != null) {
+            if (!bookingRef.isEmpty()) {
 
                 Reservation reservation = reservations.get(bookingRef) != null
                     ? reservations.get(bookingRef)

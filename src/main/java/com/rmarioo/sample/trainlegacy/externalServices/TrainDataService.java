@@ -13,8 +13,9 @@ public class TrainDataService {
   private static Trains initializeTrains() {
 
     Trains trains = new Trains();
-    trains.addTrain("first",
-        new Train(
+    String name = "first";
+    trains.addTrain(name,
+        new Train(name,
         asList(
             new Seat("A",1),new Seat("A",2),new Seat("A",3),new Seat("A", 4),
             new Seat("B",1),new Seat("B",2),new Seat("B",3),new Seat("B", 4)
