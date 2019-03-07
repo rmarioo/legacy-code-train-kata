@@ -1,9 +1,11 @@
-package com.rmarioo.sample.trainlegacy.externalServices;
+package com.rmarioo.sample.trainlegacy.externalServices.booking;
 
 
 import static com.rmarioo.sample.trainlegacy.TrainApplication.fromTestEnvironment;
 
+import com.rmarioo.sample.trainlegacy.Reservation;
 import com.rmarioo.sample.trainlegacy.Seat;
+import com.rmarioo.sample.trainlegacy.CallCollaboratorsFromTestException;
 
 import java.util.List;
 
@@ -36,13 +38,6 @@ public class BookingReferenceAPI {
       throw new CallCollaboratorsFromTestException(BookingReferenceAPI.class);
     else
      return new BookingReferenceService().findReservations();
-  }
-
-  public static class CallCollaboratorsFromTestException extends RuntimeException
-  {
-    public CallCollaboratorsFromTestException(Class aClass) {
-      super("External service " + aClass.getSimpleName() + " should not be called directly from unit Test");
-    }
   }
 
 }

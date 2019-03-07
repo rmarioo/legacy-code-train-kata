@@ -3,8 +3,7 @@ package com.rmarioo.sample.trainlegacy;
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.ResponseEntity.status;
 
-import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
-import com.rmarioo.sample.trainlegacy.externalServices.Reservation;
+import com.rmarioo.sample.trainlegacy.externalServices.booking.BookingReferenceAPI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

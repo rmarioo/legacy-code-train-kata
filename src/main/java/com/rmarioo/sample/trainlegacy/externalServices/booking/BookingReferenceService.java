@@ -1,7 +1,8 @@
-package com.rmarioo.sample.trainlegacy.externalServices;
+package com.rmarioo.sample.trainlegacy.externalServices.booking;
 
-import static com.rmarioo.sample.trainlegacy.externalServices.TrainDataService.trains;
+import static com.rmarioo.sample.trainlegacy.externalServices.traindata.TrainDataService.trains;
 
+import com.rmarioo.sample.trainlegacy.Reservation;
 import com.rmarioo.sample.trainlegacy.Seat;
 import com.rmarioo.sample.trainlegacy.Train;
 

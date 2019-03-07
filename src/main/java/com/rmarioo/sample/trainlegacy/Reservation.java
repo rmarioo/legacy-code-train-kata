@@ -1,8 +1,7 @@
-package com.rmarioo.sample.trainlegacy.externalServices;
-
-import com.rmarioo.sample.trainlegacy.Seat;
+package com.rmarioo.sample.trainlegacy;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Reservation {
   public String trainId;
@@ -16,6 +15,21 @@ public class Reservation {
     this.trainId = trainId;
     this.bookingRef = bookingRef;
     this.availableSeats = availableSeats;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Reservation that = (Reservation) o;
+    return Objects.equals(trainId, that.trainId) &&
+        Objects.equals(bookingRef, that.bookingRef) &&
+        Objects.equals(availableSeats, that.availableSeats);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(trainId, bookingRef, availableSeats);
   }
 
   @Override
