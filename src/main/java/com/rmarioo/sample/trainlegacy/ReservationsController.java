@@ -20,10 +20,12 @@ import io.swagger.annotations.Api;
 public class ReservationsController {
 
     @PostMapping("api/reservations")
-    public Reservation update(@RequestBody RequestDto requestDto) throws IOException {
+    public ResponseEntity<Reservation> update(@RequestBody RequestDto requestDto) throws IOException {
 
         WebTicketManager webTicketManager = new WebTicketManager();
-        return webTicketManager.reserve(requestDto.getTrain_id(), requestDto.getNumber_of_seats());
+        Reservation reservation = webTicketManager.reserve(requestDto.getTrain_id(), requestDto.getNumber_of_seats());
+        return (!reservation.availableSeats.isEmpty()) ? ResponseEntity.status(200).body(reservation)
+                                                       : ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("api/reservations")

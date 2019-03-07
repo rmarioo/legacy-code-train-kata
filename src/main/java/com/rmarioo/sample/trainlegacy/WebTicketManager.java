@@ -23,7 +23,7 @@ public class WebTicketManager
 
         result = trainInst;
 
-        if ((trainInst.ReservedSeats + seats) <= Math.floor(0.70 * trainInst.getMaxSeat())) {
+        if ((trainInst.getReservedSeats() + seats) <= Math.floor(0.70 * trainInst.getMaxSeat())) {
             int numberOfReserv = 0;
             // find seats to reserve
             for (int index = 0, i = 0; index < trainInst.Seats.size(); index++) {

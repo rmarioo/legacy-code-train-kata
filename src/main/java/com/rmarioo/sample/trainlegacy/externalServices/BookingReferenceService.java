@@ -19,27 +19,12 @@ public class BookingReferenceService {
     public Reservation reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
 
         Train train = trains.find(trainId);
-
-        for (Seat availableSeat : availableSeats) {
-            Seat seat = findSeat(availableSeat, train.Seats);
-            seat.setBookingRef(bookingRef);
-        }
+        train.reserveSeats(availableSeats, bookingRef);
 
         return new Reservation(trainId, bookingRef, availableSeats);
     }
 
-    private Seat findSeat(Seat availableSeat, List<Seat> seats) {
-        for (Seat seat : seats) {
-            if (sameSeat(availableSeat, seat))
-                return seat;
-        }
-        return null;
-    }
 
-    private boolean sameSeat(Seat availableSeat, Seat seat) {
-        return availableSeat.getSeatNumber() == seat.getSeatNumber() &&
-            availableSeat.getCoachName().equals(seat.getCoachName());
-    }
 
 
     public String createbookingRef() {

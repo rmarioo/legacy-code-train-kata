@@ -43,4 +43,8 @@ public class Seat {
     public String toString() {
         return coachName + seatNumber;
     }
+
+    boolean hasReservation() {
+        return getBookingRef() != null && !getBookingRef().isEmpty();
+    }
 }
