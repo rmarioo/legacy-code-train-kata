@@ -1,5 +1,8 @@
 package com.rmarioo.sample.trainlegacy;
 
+import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
+import static org.springframework.http.ResponseEntity.status;
+
 import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
 import com.rmarioo.sample.trainlegacy.externalServices.Reservation;
 
@@ -20,12 +23,13 @@ import io.swagger.annotations.Api;
 public class ReservationsController {
 
     @PostMapping("api/reservations")
-    public ResponseEntity<Reservation> update(@RequestBody RequestDto requestDto) throws IOException {
+    public ResponseEntity update(@RequestBody RequestDto requestDto) throws IOException {
 
         WebTicketManager webTicketManager = new WebTicketManager();
         Reservation reservation = webTicketManager.reserve(requestDto.getTrain_id(), requestDto.getNumber_of_seats());
-        return (!reservation.availableSeats.isEmpty()) ? ResponseEntity.status(200).body(reservation)
-                                                       : ResponseEntity.noContent().build();
+        return (!reservation.availableSeats.isEmpty())
+            ? status(200).body(reservation)
+            : status(NOT_ACCEPTABLE).body("no seat reserved");
     }
 
     @DeleteMapping("api/reservations")
