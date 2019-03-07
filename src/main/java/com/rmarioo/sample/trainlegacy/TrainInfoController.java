@@ -1,6 +1,6 @@
 package com.rmarioo.sample.trainlegacy;
 
-import com.rmarioo.sample.trainlegacy.externalServices.traindata.TrainDataAPI;
+import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

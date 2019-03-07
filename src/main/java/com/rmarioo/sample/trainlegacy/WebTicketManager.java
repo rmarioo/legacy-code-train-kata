@@ -1,7 +1,7 @@
 package com.rmarioo.sample.trainlegacy;
 
-import com.rmarioo.sample.trainlegacy.externalServices.booking.BookingReferenceAPI;
-import com.rmarioo.sample.trainlegacy.externalServices.traindata.TrainDataAPI;
+import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
+import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
 
 import java.io.IOException;
 import java.util.ArrayList;
