@@ -27,7 +27,7 @@ public class Coach {
     return seats;
   }
 
-  public boolean hasEnoughSearsFor(int requestedSeats) {
+  public boolean hasEnoughSeatsFor(int requestedSeats) {
     long availableSeats = seats.stream().filter(seat -> !seat.hasReservation()).count();
     return availableSeats >= requestedSeats;
   }

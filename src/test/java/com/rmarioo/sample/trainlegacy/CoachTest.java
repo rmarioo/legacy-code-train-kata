@@ -20,7 +20,7 @@ public class CoachTest {
     ));
 
 
-    boolean enoughSearsFor = coach.hasEnoughSearsFor(1);
+    boolean enoughSearsFor = coach.hasEnoughSeatsFor(1);
     Assert.assertThat(enoughSearsFor,is(true));
   }
 
@@ -35,7 +35,7 @@ public class CoachTest {
     ));
 
 
-    boolean enoughSearsFor = coach.hasEnoughSearsFor(1);
+    boolean enoughSearsFor = coach.hasEnoughSeatsFor(1);
     Assert.assertThat(enoughSearsFor,is(true));
   }
 
@@ -50,7 +50,7 @@ public class CoachTest {
     ));
 
 
-    boolean enoughSearsFor = coach.hasEnoughSearsFor(3);
+    boolean enoughSearsFor = coach.hasEnoughSeatsFor(3);
     Assert.assertThat(enoughSearsFor,is(false));
   }
 }
