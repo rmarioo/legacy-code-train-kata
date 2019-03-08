@@ -21,7 +21,7 @@ public class Trains
 
   private void resetReservations(Train train) {
 
-    train.Seats.stream().forEach(seat -> seat.setBookingRef(""));
+    train.allSeats().stream().forEach(seat -> seat.setBookingRef(""));
   }
 
   public Map<String, Train> getTrainsMap() {

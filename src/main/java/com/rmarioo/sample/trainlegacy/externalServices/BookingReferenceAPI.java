@@ -4,9 +4,9 @@ package com.rmarioo.sample.trainlegacy.externalServices;
 import static com.rmarioo.sample.trainlegacy.TrainApplication.fromTestEnvironment;
 import static com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI.TrainDataService.trains;
 
+import com.rmarioo.sample.trainlegacy.CallCollaboratorsFromTestException;
 import com.rmarioo.sample.trainlegacy.Reservation;
 import com.rmarioo.sample.trainlegacy.Seat;
-import com.rmarioo.sample.trainlegacy.CallCollaboratorsFromTestException;
 import com.rmarioo.sample.trainlegacy.Train;
 
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class BookingReferenceAPI {
 
           Map<String, Reservation> reservations = new HashMap<>();
 
-          List<Seat> seats = train.Seats;
+        List<Seat> seats = train.allSeats();
           for (Seat seat : seats) {
               String bookingRef = seat.getBookingRef();
               if (!bookingRef.isEmpty()) {

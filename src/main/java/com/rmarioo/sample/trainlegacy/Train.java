@@ -1,30 +1,47 @@
 package com.rmarioo.sample.trainlegacy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Train {
-    public List<Seat> Seats;
+  public List<Coach> coaches = new ArrayList<>();
     public String name;
 
     public Train(String name,List<Seat> seats) {
         this.name = name;
-        Seats = seats;
+      coaches = createFrom(seats);
     }
 
-    public int getReservedSeats()
+  private List<Coach> createFrom(List<Seat> seats) {
+
+    Map<String,Coach> coachesMap = new HashMap<>();
+    for (Seat seat : seats)
     {
-       return this.Seats.stream().filter(seat -> seat.hasReservation())
+      if (coachesMap.get(seat.getCoachName()) == null)
+        coachesMap.put(seat.getCoachName(), new Coach());
+      coachesMap.get(seat.getCoachName()).seats.add(seat);
+    }
+    return new ArrayList<>(coachesMap.values());
+  }
+
+  public int getReservedSeats()
+    {
+
+      return allSeats().stream().filter(seat -> seat.hasReservation())
                                   .map(e -> 1).reduce(0, Integer::sum);
     }
 
     public int getMaxSeat() {
-        return this.Seats.size();
+
+      return allSeats().size();
     }
 
     public void reserveSeats(List<Seat> availableSeats, String bookingRef) {
         for (Seat availableSeat : availableSeats) {
-            Seat seat = findSeat(availableSeat, Seats);
+
+          Seat seat = findSeat(availableSeat, allSeats());
             seat.setBookingRef(bookingRef);
         }
 
@@ -49,8 +66,10 @@ public class Train {
 
     protected List<Seat> findAvailableSeats(int seats) {
           List<Seat> availableSeats = new ArrayList<>();
-          for (int index = 0, i = 0; index < Seats.size(); index++) {
-              Seat each = Seats.get(index);
+
+      for (int index = 0, i = 0; index < allSeats().size(); index++) {
+
+        Seat each = allSeats().get(index);
               if (each.getBookingRef() == "") {
                   i++;
                   if (i <= seats) {
@@ -60,4 +79,13 @@ public class Train {
           }
           return availableSeats;
       }
+
+  public List<Seat> allSeats() {
+    List<Seat> seats = new ArrayList<>();
+    for (Coach coach : coaches) {
+      seats.addAll(coach.seats);
+    }
+    return seats;
+  }
+
 }
