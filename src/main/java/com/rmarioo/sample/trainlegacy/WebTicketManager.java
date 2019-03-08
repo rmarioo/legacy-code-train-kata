@@ -3,7 +3,6 @@ package com.rmarioo.sample.trainlegacy;
 import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
 import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,20 +10,23 @@ import java.util.List;
 public class WebTicketManager
 {
 
-  public Reservation reserve(String trainId, int seats) throws IOException {
+  public Reservation reserve(String trainId, int requestedSeats) {
 
     Train train = findTrain(trainId);
 
-    if (requestDoesnotExceeds70percentofAvailability(seats, train))
+    if (requestDoesnotExceeds70percentofAvailability(requestedSeats, train))
     {
-      List<Seat> availableSeats = findAvailableSeats(seats, train);
+      List<Seat> availableSeats = findAvailableSeats(requestedSeats, train);
 
-      if (availableSeats.size() == seats)
-        return reserveSeats(trainId, availableSeats);
-      else
-        return new Reservation(trainId, "", Arrays.asList());
+      return (availableSeats.size() == requestedSeats)
+        ? reserveSeats(trainId, availableSeats)
+        : noSeatsReservation(trainId);
     }
 
+    return noSeatsReservation(trainId);
+  }
+
+  protected Reservation noSeatsReservation(String trainId) {
     return new Reservation(trainId, "", Arrays.asList());
   }
 
@@ -45,7 +47,7 @@ public class WebTicketManager
     if  (isSuccessful)
       return new Reservation(trainId, bookingRef, availableSeats);
     else
-      return new Reservation(trainId,"", Arrays.asList());
+      return noSeatsReservation(trainId);
   }
 
   protected List<Seat> findAvailableSeats(int seats, Train train) {
