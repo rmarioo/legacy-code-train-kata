@@ -15,20 +15,8 @@ public class WebTicketManager
 
         Train train = findTrain(trainId);
 
-        List<Seat> availableSeats = new ArrayList<>();
         if ((train.getReservedSeats() + seats) <= Math.floor(0.70 * train.getMaxSeat())) {
-            int numberOfReserv = 0;
-            for (int index = 0, i = 0; index < train.Seats.size(); index++) {
-                Seat each = train.Seats.get(index);
-                if (each.getBookingRef() == "") {
-                    i++;
-                    if (i <= seats) {
-                        availableSeats.add(each);
-                    }
-                }
-            }
-
-            int reservedSets = 0;
+            List<Seat> availableSeats = findAvailableSeats(seats, train);
 
             String bookingRef;
             if (availableSeats.size() != seats) {
@@ -37,21 +25,16 @@ public class WebTicketManager
             else {
                 bookingRef = createBookingReference();
 
-                for (Seat availableSeat : availableSeats) {
-                    availableSeat.setBookingRef(bookingRef);
-                    numberOfReserv++;
-                    reservedSets++;
-                }
+
             }
 
-            if (numberOfReserv == seats) {
+            if (availableSeats.size() == seats) {
 
-                if (reservedSets == 0) {
-                    String output = String.format("Reserved seat(s): ", reservedSets);
+                if (availableSeats.size() == 0) {
+                    String output = String.format("Reserved seat(s): ", 0);
                     System.out.println(output);
                 }
 
-                String todod = "[TODOD]";
 
                 Boolean isSuccessful = makeReservation(trainId, availableSeats, bookingRef);
                 if  (isSuccessful)
@@ -64,6 +47,20 @@ public class WebTicketManager
         }
 
        return new Reservation(trainId,"", Arrays.asList());
+    }
+
+    protected List<Seat> findAvailableSeats(int seats, Train train) {
+        List<Seat> availableSeats = new ArrayList<>();
+        for (int index = 0, i = 0; index < train.Seats.size(); index++) {
+            Seat each = train.Seats.get(index);
+            if (each.getBookingRef() == "") {
+                i++;
+                if (i <= seats) {
+                    availableSeats.add(each);
+                }
+            }
+        }
+        return availableSeats;
     }
 
     protected Boolean makeReservation(String trainId, List<Seat> availableSeats, String bookingRef) {
