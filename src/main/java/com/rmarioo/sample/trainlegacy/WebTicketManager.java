@@ -11,45 +11,40 @@ import java.util.List;
 public class WebTicketManager
 {
 
-    public Reservation reserve(String trainId, int seats) throws IOException {
+  public Reservation reserve(String trainId, int seats) throws IOException {
 
-        Train train = findTrain(trainId);
+    Train train = findTrain(trainId);
 
-        if ((train.getReservedSeats() + seats) <= Math.floor(0.70 * train.getMaxSeat())) {
-            List<Seat> availableSeats = findAvailableSeats(seats, train);
+    if ((train.getReservedSeats() + seats) <= Math.floor(0.70 * train.getMaxSeat())) {
+      List<Seat> availableSeats = findAvailableSeats(seats, train);
 
-            String bookingRef;
-            if (availableSeats.size() != seats) {
-                return new Reservation(trainId,"", Arrays.asList());
-            }
-            else {
-                bookingRef = createBookingReference();
+      if (availableSeats.size() == seats)
+        return reserveSeats(trainId, availableSeats);
+      else
+        return new Reservation(trainId, "", Arrays.asList());
 
-
-            }
-
-            if (availableSeats.size() == seats) {
-
-                if (availableSeats.size() == 0) {
-                    String output = String.format("Reserved seat(s): ", 0);
-                    System.out.println(output);
-                }
-
-
-                Boolean isSuccessful = makeReservation(trainId, availableSeats, bookingRef);
-                if  (isSuccessful)
-                    return new Reservation(trainId, bookingRef, availableSeats);
-                else
-                    return new Reservation(trainId,"", Arrays.asList());
-
-            }
-
-        }
-
-       return new Reservation(trainId,"", Arrays.asList());
     }
 
-    protected List<Seat> findAvailableSeats(int seats, Train train) {
+    return new Reservation(trainId, "", Arrays.asList());
+  }
+
+  protected Reservation reserveSeats(String trainId, List<Seat> availableSeats) {
+    String bookingRef = createBookingReference();
+
+    if (availableSeats.size() == 0) {
+      String output = String.format("Reserved seat(s): ", 0);
+      System.out.println(output);
+    }
+
+
+    Boolean isSuccessful = makeReservation(trainId, availableSeats, bookingRef);
+    if  (isSuccessful)
+      return new Reservation(trainId, bookingRef, availableSeats);
+    else
+      return new Reservation(trainId,"", Arrays.asList());
+  }
+
+  protected List<Seat> findAvailableSeats(int seats, Train train) {
         List<Seat> availableSeats = new ArrayList<>();
         for (int index = 0, i = 0; index < train.Seats.size(); index++) {
             Seat each = train.Seats.get(index);
