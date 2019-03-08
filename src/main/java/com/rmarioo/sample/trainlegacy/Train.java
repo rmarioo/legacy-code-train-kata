@@ -42,7 +42,7 @@ public class Train {
             availableSeat.getCoachName().equals(seat.getCoachName());
     }
 
-  protected boolean requestDoesnotExceeds70percentofAvailability(int seats) {
+  protected boolean requestDoesnotExceeds70perc(int seats) {
     return (getReservedSeats() + seats) <= Math.floor(0.70 * getMaxSeat());
   }
 }

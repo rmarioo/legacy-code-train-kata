@@ -14,7 +14,7 @@ public class WebTicketManager
 
     Train train = findTrain(trainId);
 
-    if (train.requestDoesnotExceeds70percentofAvailability(requestedSeats))
+    if (train.requestDoesnotExceeds70perc(requestedSeats))
     {
       List<Seat> availableSeats = findAvailableSeats(requestedSeats, train);
 
