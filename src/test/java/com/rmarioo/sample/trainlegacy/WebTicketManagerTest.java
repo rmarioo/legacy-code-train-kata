@@ -21,6 +21,15 @@ public class WebTicketManagerTest
     Assert.assertThat(reservation,is(new Reservation("first","",Arrays.asList())));
   }
 
+  @Test
+  public void bbb() throws IOException {
+
+    WebTicketManager webTicketManager = new TestableWebTicketManager();
+    Reservation reservation = webTicketManager.reserve("first", 2);
+
+    Assert.assertThat(reservation,is(new Reservation("first","",Arrays.asList())));
+  }
+
   private class TestableWebTicketManager extends WebTicketManager {
     @Override
     protected Train findTrain(String trainId) {
