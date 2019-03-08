@@ -14,7 +14,7 @@ public class WebTicketManager
 
     Train train = findTrain(trainId);
 
-    if (requestDoesnotExceeds70percentofAvailability(requestedSeats, train))
+    if (train.requestDoesnotExceeds70percentofAvailability(requestedSeats))
     {
       List<Seat> availableSeats = findAvailableSeats(requestedSeats, train);
 
@@ -28,10 +28,6 @@ public class WebTicketManager
 
   protected Reservation noSeatsReservation(String trainId) {
     return new Reservation(trainId, "", Arrays.asList());
-  }
-
-  protected boolean requestDoesnotExceeds70percentofAvailability(int seats, Train train) {
-    return (train.getReservedSeats() + seats) <= Math.floor(0.70 * train.getMaxSeat());
   }
 
   protected Reservation reserveSeats(String trainId, List<Seat> availableSeats) {

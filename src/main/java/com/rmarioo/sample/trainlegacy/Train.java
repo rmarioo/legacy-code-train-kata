@@ -41,4 +41,8 @@ public class Train {
         return availableSeat.getSeatNumber() == seat.getSeatNumber() &&
             availableSeat.getCoachName().equals(seat.getCoachName());
     }
+
+  protected boolean requestDoesnotExceeds70percentofAvailability(int seats) {
+    return (getReservedSeats() + seats) <= Math.floor(0.70 * getMaxSeat());
+  }
 }
