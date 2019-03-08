@@ -10,7 +10,13 @@ public class Coach {
 
   public Coach(String name) {
 
+    this(name,new ArrayList<>());
+  }
+
+  public Coach(String name, List<Seat> seats) {
+
     this.name = name;
+    this.seats = seats;
   }
 
   public String getName() {
@@ -19,5 +25,10 @@ public class Coach {
 
   public List<Seat> getSeats() {
     return seats;
+  }
+
+  public boolean hasEnoughSearsFor(int requestedSeats) {
+    long availableSeats = seats.stream().filter(seat -> !seat.hasReservation()).count();
+    return availableSeats >= requestedSeats;
   }
 }
