@@ -18,28 +18,17 @@ public class WebTicketManager
             int numberOfReserv = 0;
             List<Seat> availableSeats = availableSeats(requestedSeats, trainInst);
 
-            int count = 0;
-            for (Seat seat : availableSeats) {
-                count++;
-            }
-
             int reservedSets = 0;
 
             String bookingRef;
-            if (count != requestedSeats) {
-                return new Reservation(trainId,"", Arrays.asList());
-            }
-            else {
+            if (availableSeats.size() == requestedSeats) {
                 bookingRef = BookingReferenceAPI.createbookingRef();
-                
+
                 for (Seat availableSeat : availableSeats) {
                     availableSeat.setBookingRef(bookingRef);
                     numberOfReserv++;
                     reservedSets++;
                 }
-            }
-
-            if (numberOfReserv == requestedSeats) {
 
                 if (reservedSets == 0) {
                     String output = String.format("Reserved seat(s): ", reservedSets);
@@ -54,7 +43,11 @@ public class WebTicketManager
                 else
                     return new Reservation(trainId,"", Arrays.asList());
 
+            } else {
+                return new Reservation(trainId,"", Arrays.asList());
             }
+
+
 
         }
 
