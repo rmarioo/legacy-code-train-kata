@@ -11,23 +11,22 @@ import java.util.List;
 public class WebTicketManager
 {
 
-    public Reservation reserve(String trainId, int seats) throws IOException {
-        List<Seat> availableSeats = new ArrayList<>();
+    public Reservation reserve(String trainId, int requestedSeats) throws IOException {
         int count = 0;
-        Train result;
         String bookingRef;
 
         Train trainInst = TrainDataAPI.findTrain(trainId);
 
-        result = trainInst;
+        Train result = trainInst;
 
-        if ((trainInst.getReservedSeats() + seats) <= Math.floor(0.70 * trainInst.getMaxSeat())) {
+        if ((trainInst.getReservedSeats() + requestedSeats) <= Math.floor(0.70 * trainInst.getMaxSeat())) {
             int numberOfReserv = 0;
+            List<Seat> availableSeats = new ArrayList<>();
             for (int index = 0, i = 0; index < trainInst.Seats.size(); index++) {
                 Seat each = trainInst.Seats.get(index);
                 if (each.getBookingRef() == "") {
                     i++;
-                    if (i <= seats) {
+                    if (i <= requestedSeats) {
                         availableSeats.add(each);
                     }
                 }
@@ -39,7 +38,7 @@ public class WebTicketManager
 
             int reservedSets = 0;
 
-            if (count != seats) {
+            if (count != requestedSeats) {
                 return new Reservation(trainId,"", Arrays.asList());
             }
             else {
@@ -52,7 +51,7 @@ public class WebTicketManager
                 }
             }
 
-            if (numberOfReserv == seats) {
+            if (numberOfReserv == requestedSeats) {
 
                 if (reservedSets == 0) {
                     String output = String.format("Reserved seat(s): ", reservedSets);
