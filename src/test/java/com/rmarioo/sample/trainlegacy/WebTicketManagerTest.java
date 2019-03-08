@@ -43,6 +43,22 @@ public class WebTicketManagerTest
 
   }
 
+  @Test
+  public void sameReservasion_goes_across_different_coaches() throws IOException {
+
+    WebTicketManager webTicketManager = new TestableWebTicketManager();
+    Reservation reservation = webTicketManager.reserve("first", 5);
+
+    Assert.assertThat(reservation,is(new Reservation("first","ref1",
+        Arrays.asList(
+            new Seat("A",1),
+            new Seat("A",2),
+            new Seat("A",3),
+            new Seat("A",4),
+            new Seat("B",1)
+        ))));
+  }
+
 
   private class TestableWebTicketManager extends WebTicketManager
   {
