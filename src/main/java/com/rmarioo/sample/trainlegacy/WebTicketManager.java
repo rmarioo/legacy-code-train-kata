@@ -61,7 +61,12 @@ public class WebTicketManager
 
                 String todod = "[TODOD]";
 
-                return BookingReferenceAPI.reserve(trainId, availableSeats, bookingRef);
+                Boolean isSuccessful = BookingReferenceAPI.reserve(trainId, availableSeats, bookingRef);
+                if  (isSuccessful)
+                    return new Reservation(trainId, bookingRef, availableSeats);
+                else
+                    return new Reservation(trainId,"", Arrays.asList());
+
             }
 
         }

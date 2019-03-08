@@ -25,7 +25,7 @@ public class BookingReferenceAPI {
       return new BookingReferenceService().createbookingRef();
   }
 
-  public static Reservation reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
+  public static Boolean reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
 
     if (fromTestEnvironment)
       throw new CallCollaboratorsFromTestException(BookingReferenceAPI.class);
@@ -51,12 +51,12 @@ public class BookingReferenceAPI {
 
       private static final AtomicLong counter = new AtomicLong();
 
-      public Reservation reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
+      public Boolean reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
 
           Train train = trains.find(trainId);
           train.reserveSeats(availableSeats, bookingRef);
 
-          return new Reservation(trainId, bookingRef, availableSeats);
+          return true;
       }
 
 

@@ -28,7 +28,7 @@ public class ReservationsController {
         Reservation reservation = webTicketManager.reserve(requestDto.getTrain_id(), requestDto.getNumber_of_seats());
         return (!reservation.availableSeats.isEmpty())
             ? status(200).body(reservation)
-            : status(NOT_ACCEPTABLE).body("no seat reserved");
+            : status(NOT_ACCEPTABLE).body("reservation failed - no seat reserved");
     }
 
     @DeleteMapping("api/reservations")

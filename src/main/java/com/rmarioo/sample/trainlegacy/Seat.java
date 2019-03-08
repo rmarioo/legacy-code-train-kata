@@ -1,5 +1,7 @@
 package com.rmarioo.sample.trainlegacy;
 
+import java.util.Objects;
+
 public class Seat {
     private String coachName;
     private int seatNumber;
@@ -40,8 +42,22 @@ public class Seat {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return seatNumber == seat.seatNumber &&
+            Objects.equals(coachName, seat.coachName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coachName, seatNumber);
+    }
+
+    @Override
     public String toString() {
-        return coachName + seatNumber;
+        return coachName + seatNumber + (hasReservation() ? bookingRef : "");
     }
 
     boolean hasReservation() {
