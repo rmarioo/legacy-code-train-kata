@@ -3,7 +3,6 @@ package com.rmarioo.sample.trainlegacy;
 import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
 import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class WebTicketManager
 
     if (train.requestDoesnotExceeds70perc(requestedSeats))
     {
-      List<Seat> availableSeats = findAvailableSeats(requestedSeats, train);
+      List<Seat> availableSeats = train.findAvailableSeats(requestedSeats);
 
       return (availableSeats.size() == requestedSeats)
         ? reserveSeats(trainId, availableSeats)
@@ -31,36 +30,21 @@ public class WebTicketManager
   }
 
   protected Reservation reserveSeats(String trainId, List<Seat> availableSeats) {
-    String bookingRef = createBookingReference();
 
     if (availableSeats.size() == 0) {
       String output = String.format("Reserved seat(s): ", 0);
       System.out.println(output);
     }
 
+    String bookingRef = createBookingReference();
 
     Boolean isSuccessful = makeReservation(trainId, availableSeats, bookingRef);
-    if  (isSuccessful)
-      return new Reservation(trainId, bookingRef, availableSeats);
-    else
-      return noSeatsReservation(trainId);
+
+    return  (isSuccessful) ? new Reservation(trainId, bookingRef, availableSeats)
+                           : noSeatsReservation(trainId);
   }
 
-  protected List<Seat> findAvailableSeats(int seats, Train train) {
-        List<Seat> availableSeats = new ArrayList<>();
-        for (int index = 0, i = 0; index < train.Seats.size(); index++) {
-            Seat each = train.Seats.get(index);
-            if (each.getBookingRef() == "") {
-                i++;
-                if (i <= seats) {
-                    availableSeats.add(each);
-                }
-            }
-        }
-        return availableSeats;
-    }
-
-    protected Boolean makeReservation(String trainId, List<Seat> availableSeats, String bookingRef) {
+  protected Boolean makeReservation(String trainId, List<Seat> availableSeats, String bookingRef) {
         return BookingReferenceAPI.reserve(trainId, availableSeats, bookingRef);
     }
 
