@@ -12,15 +12,12 @@ public class WebTicketManager
 {
 
     public Reservation reserve(String trainId, int seats) throws IOException {
-        List<Seat> availableSeats = new ArrayList<>();
         int count = 0;
-        Train result;
         String bookingRef;
 
         Train trainInst = findTrain(trainId);
 
-        result = trainInst;
-
+        List<Seat> availableSeats = new ArrayList<>();
         if ((trainInst.getReservedSeats() + seats) <= Math.floor(0.70 * trainInst.getMaxSeat())) {
             int numberOfReserv = 0;
             for (int index = 0, i = 0; index < trainInst.Seats.size(); index++) {
