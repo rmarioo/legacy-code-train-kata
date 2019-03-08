@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Train {
-  public List<Coach> coaches = new ArrayList<>();
+  public List<Coach> coaches;
     public String name;
 
     public Train(String name,List<Seat> seats) {
