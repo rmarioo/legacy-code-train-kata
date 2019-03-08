@@ -17,7 +17,7 @@ public class WebTicketManager
         Train result;
         String bookingRef;
 
-        Train trainInst = TrainDataAPI.findTrain(trainId);
+        Train trainInst = findTrain(trainId);
 
         result = trainInst;
 
@@ -74,6 +74,9 @@ public class WebTicketManager
        return new Reservation(trainId,"", Arrays.asList());
     }
 
+    protected Train findTrain(String trainId) {
+        return TrainDataAPI.findTrain(trainId);
+    }
 
 
 }
