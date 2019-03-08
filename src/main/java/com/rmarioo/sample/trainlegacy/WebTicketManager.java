@@ -43,8 +43,8 @@ public class WebTicketManager
                 return new Reservation(trainId,"", Arrays.asList());
             }
             else {
-                bookingRef = BookingReferenceAPI.createbookingRef();
-                
+                bookingRef = createBookingReference();
+
                 for (Seat availableSeat : availableSeats) {
                     availableSeat.setBookingRef(bookingRef);
                     numberOfReserv++;
@@ -61,7 +61,7 @@ public class WebTicketManager
 
                 String todod = "[TODOD]";
 
-                Boolean isSuccessful = BookingReferenceAPI.reserve(trainId, availableSeats, bookingRef);
+                Boolean isSuccessful = makeReservation(trainId, availableSeats, bookingRef);
                 if  (isSuccessful)
                     return new Reservation(trainId, bookingRef, availableSeats);
                 else
@@ -72,6 +72,16 @@ public class WebTicketManager
         }
 
        return new Reservation(trainId,"", Arrays.asList());
+    }
+
+    protected Boolean makeReservation(String trainId, List<Seat> availableSeats, String bookingRef) {
+        return BookingReferenceAPI.reserve(trainId, availableSeats, bookingRef);
+    }
+
+    protected String createBookingReference() {
+        String bookingRef;
+        bookingRef = BookingReferenceAPI.createbookingRef();
+        return bookingRef;
     }
 
     protected Train findTrain(String trainId) {
