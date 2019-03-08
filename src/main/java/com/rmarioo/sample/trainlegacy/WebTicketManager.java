@@ -15,23 +15,17 @@ public class WebTicketManager
         Train trainInst = TrainDataAPI.findTrain(trainId);
 
         if (requestDoesNotExceeds70perc(requestedSeats, trainInst)) {
-            int numberOfReserv = 0;
             List<Seat> availableSeats = availableSeats(requestedSeats, trainInst);
 
-            int reservedSets = 0;
 
             String bookingRef;
             if (availableSeats.size() == requestedSeats) {
                 bookingRef = BookingReferenceAPI.createbookingRef();
 
-                for (Seat availableSeat : availableSeats) {
-                    availableSeat.setBookingRef(bookingRef);
-                    numberOfReserv++;
-                    reservedSets++;
-                }
+                applyBookingRef(availableSeats, bookingRef);
 
-                if (reservedSets == 0) {
-                    String output = String.format("Reserved seat(s): ", reservedSets);
+                if (availableSeats.size() == 0) {
+                    String output = String.format("Reserved seat(s): ", 0);
                     System.out.println(output);
                 }
 
@@ -52,6 +46,12 @@ public class WebTicketManager
         }
 
        return new Reservation(trainId,"", Arrays.asList());
+    }
+
+    protected void applyBookingRef(List<Seat> availableSeats, String bookingRef) {
+        for (Seat availableSeat : availableSeats) {
+            availableSeat.setBookingRef(bookingRef);
+        }
     }
 
     protected List<Seat> availableSeats(int requestedSeats, Train trainInst) {
