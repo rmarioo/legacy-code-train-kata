@@ -20,8 +20,8 @@ public class Train {
     for (Seat seat : seats)
     {
       if (coachesMap.get(seat.getCoachName()) == null)
-        coachesMap.put(seat.getCoachName(), new Coach());
-      coachesMap.get(seat.getCoachName()).seats.add(seat);
+        coachesMap.put(seat.getCoachName(), new Coach(seat.getCoachName()));
+      coachesMap.get(seat.getCoachName()).getSeats().add(seat);
     }
     return new ArrayList<>(coachesMap.values());
   }
@@ -83,7 +83,7 @@ public class Train {
   public List<Seat> allSeats() {
     List<Seat> seats = new ArrayList<>();
     for (Coach coach : coaches) {
-      seats.addAll(coach.seats);
+      seats.addAll(coach.getSeats());
     }
     return seats;
   }

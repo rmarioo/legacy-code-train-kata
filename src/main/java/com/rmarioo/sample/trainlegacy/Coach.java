@@ -5,5 +5,19 @@ import java.util.List;
 
 public class Coach {
 
-  List<Seat> seats = new ArrayList<>();
+  private final String name;
+  private List<Seat> seats = new ArrayList<>();
+
+  public Coach(String name) {
+
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public List<Seat> getSeats() {
+    return seats;
+  }
 }
