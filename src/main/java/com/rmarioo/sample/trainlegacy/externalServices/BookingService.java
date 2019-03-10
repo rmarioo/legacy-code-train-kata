@@ -1,4 +1,6 @@
-package com.rmarioo.sample.trainlegacy;
+package com.rmarioo.sample.trainlegacy.externalServices;
+
+import com.rmarioo.sample.trainlegacy.Seat;
 
 import java.util.List;
 

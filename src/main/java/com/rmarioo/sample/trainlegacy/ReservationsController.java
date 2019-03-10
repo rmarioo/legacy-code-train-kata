@@ -3,7 +3,8 @@ package com.rmarioo.sample.trainlegacy;
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.ResponseEntity.status;
 
-import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
+import com.rmarioo.sample.trainlegacy.externalServices.DefaultBookingService;
+import com.rmarioo.sample.trainlegacy.externalServices.DefaultTrainDataRepository;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +33,7 @@ public class ReservationsController {
 
     @DeleteMapping("api/reservations")
     public ResponseEntity deleteReservations() {
-        BookingReferenceAPI.deleteReservations();
+        DefaultBookingService.BookingReferenceAPI.deleteReservations();
         return ResponseEntity.noContent().build();
     }
 

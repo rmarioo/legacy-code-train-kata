@@ -2,6 +2,9 @@ package com.rmarioo.sample.trainlegacy;
 
 import static org.hamcrest.CoreMatchers.is;
 
+import com.rmarioo.sample.trainlegacy.externalServices.BookingService;
+import com.rmarioo.sample.trainlegacy.externalServices.TrainDataRepository;
+
 import org.junit.Assert;
 import org.junit.Test;
 

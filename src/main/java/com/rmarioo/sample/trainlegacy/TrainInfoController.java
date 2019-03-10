@@ -1,6 +1,6 @@
 package com.rmarioo.sample.trainlegacy;
 
-import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
+import com.rmarioo.sample.trainlegacy.externalServices.DefaultTrainDataRepository;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class TrainInfoController {
     @GetMapping("api/trains")
     public ResponseEntity<List<Train>> findReservations()
     {
-       return ResponseEntity.ok(TrainDataAPI.findTrains());
+       return ResponseEntity.ok(DefaultTrainDataRepository.TrainDataAPI.findTrains());
     }
 
 }

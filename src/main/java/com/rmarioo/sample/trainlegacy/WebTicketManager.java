@@ -1,5 +1,8 @@
 package com.rmarioo.sample.trainlegacy;
 
+import com.rmarioo.sample.trainlegacy.externalServices.BookingService;
+import com.rmarioo.sample.trainlegacy.externalServices.TrainDataRepository;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,7 +10,7 @@ public class WebTicketManager
 {
 
   private final BookingService bookingService;
-  private  TrainDataRepository trainDataRepository;
+  private TrainDataRepository trainDataRepository;
 
   public WebTicketManager(TrainDataRepository trainDataRepository,
                           BookingService bookingService)
@@ -16,24 +19,26 @@ public class WebTicketManager
     this.bookingService = bookingService;
   }
 
-  public Reservation reserve(String trainId, int requestedSeats) {
+  public Reservation reserve(String trainName, int requestedSeats) {
 
-    Train train = trainDataRepository.findTrain(trainId);
+    Train train = trainDataRepository.findTrain(trainName);
 
-    if (train.requestDoesnotExceeds70perc(requestedSeats))
+    if (train.requestDoesnotExceeds70perc(requestedSeats) &&
+        train.enoughAvailableSeats(requestedSeats))
     {
-      List<Seat> availableSeats = train.findAvailableSeats(requestedSeats);
+      List<Seat> availableSeats = train.availableSeatsFor(requestedSeats);
 
       String bookingRef    = bookingService.createbookingRef();
-      Boolean isSuccessful = bookingService.reserve(trainId, availableSeats, bookingRef);
+      Boolean isReservationSuccesful = bookingService.reserve(trainName, availableSeats, bookingRef);
 
-      return (isSuccessful && availableSeats.size() == requestedSeats)
-          ? new Reservation(trainId, bookingRef, availableSeats)
-          : noSeatsReservation(trainId);
+      return (isReservationSuccesful)
+          ? new Reservation(trainName, bookingRef, availableSeats)
+          : noSeatsReservation(trainName);
     }
 
-    return noSeatsReservation(trainId);
+    return noSeatsReservation(trainName);
   }
+
 
   private Reservation noSeatsReservation(String trainId) {
     return new Reservation(trainId, "", Arrays.asList());

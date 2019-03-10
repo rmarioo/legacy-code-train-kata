@@ -1,10 +1,34 @@
 package com.rmarioo.sample.trainlegacy;
 
+import static java.util.Arrays.asList;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Trains
 {
+  private static Trains instance;
+
+  public static Trains getInstance() {
+    if (instance == null) {
+      instance = initializeTrains();
+    }
+    return instance;
+  }
+
+  private static Trains initializeTrains() {
+
+    Trains trains = new Trains();
+    String name = "first";
+    trains.addTrain(name,
+        new Train(name,
+            asList(
+                new Seat("A",1),new Seat("A",2),new Seat("A",3),new Seat("A", 4),
+                new Seat("B",1),new Seat("B",2),new Seat("B",3),new Seat("B", 4)
+            )));
+    return trains;
+  }
+
   private Map<String, Train> trainsMap = new HashMap<>();
 
   public Train find(String trainId) {

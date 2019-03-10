@@ -7,18 +7,17 @@ import java.util.Map;
 
 public class Train {
   public List<Coach> coaches;
-    public String name;
+  public String name;
 
-    public Train(String name,List<Seat> seats) {
-        this.name = name;
-      coaches = createFrom(seats);
-    }
+  public Train(String name, List<Seat> seats) {
+    this.name = name;
+    coaches = createFrom(seats);
+  }
 
   private List<Coach> createFrom(List<Seat> seats) {
 
-    Map<String,Coach> coachesMap = new HashMap<>();
-    for (Seat seat : seats)
-    {
+    Map<String, Coach> coachesMap = new HashMap<>();
+    for (Seat seat : seats) {
       if (coachesMap.get(seat.getCoachName()) == null)
         coachesMap.put(seat.getCoachName(), new Coach(seat.getCoachName()));
       coachesMap.get(seat.getCoachName()).getSeats().add(seat);
@@ -26,59 +25,58 @@ public class Train {
     return new ArrayList<>(coachesMap.values());
   }
 
-  public int getReservedSeats()
-    {
+  public int getReservedSeats() {
 
-      return allSeats().stream().filter(seat -> seat.hasReservation())
-                                  .map(e -> 1).reduce(0, Integer::sum);
+    return allSeats().stream().filter(seat -> seat.hasReservation())
+        .map(e -> 1).reduce(0, Integer::sum);
+  }
+
+  public int getMaxSeat() {
+
+    return allSeats().size();
+  }
+
+  public void reserveSeats(List<Seat> availableSeats, String bookingRef) {
+    for (Seat availableSeat : availableSeats) {
+
+      Seat seat = findSeat(availableSeat, allSeats());
+      seat.setBookingRef(bookingRef);
     }
 
-    public int getMaxSeat() {
+  }
 
-      return allSeats().size();
+  private Seat findSeat(Seat availableSeat, List<Seat> seats) {
+    for (Seat seat : seats) {
+      if (sameSeat(availableSeat, seat))
+        return seat;
     }
+    return null;
+  }
 
-    public void reserveSeats(List<Seat> availableSeats, String bookingRef) {
-        for (Seat availableSeat : availableSeats) {
+  private boolean sameSeat(Seat availableSeat, Seat seat) {
+    return availableSeat.getSeatNumber() == seat.getSeatNumber() &&
+        availableSeat.getCoachName().equals(seat.getCoachName());
+  }
 
-          Seat seat = findSeat(availableSeat, allSeats());
-            seat.setBookingRef(bookingRef);
-        }
-
-    }
-
-    private Seat findSeat(Seat availableSeat, List<Seat> seats) {
-        for (Seat seat : seats) {
-            if (sameSeat(availableSeat, seat))
-                return seat;
-        }
-        return null;
-    }
-
-    private boolean sameSeat(Seat availableSeat, Seat seat) {
-        return availableSeat.getSeatNumber() == seat.getSeatNumber() &&
-            availableSeat.getCoachName().equals(seat.getCoachName());
-    }
-
-  protected boolean requestDoesnotExceeds70perc(int seats) {
+  public boolean requestDoesnotExceeds70perc(int seats) {
     return (getReservedSeats() + seats) <= Math.floor(0.70 * getMaxSeat());
   }
 
-    protected List<Seat> findAvailableSeats(int seats) {
-          List<Seat> availableSeats = new ArrayList<>();
+  public List<Seat> availableSeatsFor(int seats) {
+    List<Seat> availableSeats = new ArrayList<>();
 
-      for (int index = 0, i = 0; index < allSeats().size(); index++) {
+    for (int index = 0, i = 0; index < allSeats().size(); index++) {
 
-        Seat each = allSeats().get(index);
-              if (each.getBookingRef() == "") {
-                  i++;
-                  if (i <= seats) {
-                      availableSeats.add(each);
-                  }
-              }
-          }
-          return availableSeats;
+      Seat each = allSeats().get(index);
+      if (each.getBookingRef() == "") {
+        i++;
+        if (i <= seats) {
+          availableSeats.add(each);
+        }
       }
+    }
+    return availableSeats;
+  }
 
   public List<Seat> allSeats() {
     List<Seat> seats = new ArrayList<>();
@@ -86,6 +84,10 @@ public class Train {
       seats.addAll(coach.getSeats());
     }
     return seats;
+  }
+
+  public boolean enoughAvailableSeats(int requestedSeats) {
+    return availableSeatsFor(requestedSeats).size() >= requestedSeats;
   }
 
 }
