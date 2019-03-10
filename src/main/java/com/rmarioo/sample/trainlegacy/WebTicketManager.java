@@ -1,13 +1,18 @@
 package com.rmarioo.sample.trainlegacy;
 
-import com.rmarioo.sample.trainlegacy.externalServices.BookingReferenceAPI;
-import com.rmarioo.sample.trainlegacy.externalServices.TrainDataAPI;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class WebTicketManager
 {
+
+  private final BookingService bookingService;
+  private  TrainDataRepository trainDataRepository;
+
+  public WebTicketManager(TrainDataRepository trainDataRepository, BookingService bookingService) {
+    this.trainDataRepository = trainDataRepository;
+    this.bookingService = bookingService;
+  }
 
   public Reservation reserve(String trainId, int requestedSeats) {
 
@@ -32,10 +37,6 @@ public class WebTicketManager
 
   protected Reservation reserveSeats(String trainId, List<Seat> availableSeats) {
 
-    if (availableSeats.size() == 0) {
-      String output = String.format("Reserved seat(s): ", 0);
-      System.out.println(output);
-    }
 
     String bookingRef = createBookingReference();
 
@@ -46,17 +47,16 @@ public class WebTicketManager
   }
 
   protected Boolean makeReservation(String trainId, List<Seat> availableSeats, String bookingRef) {
-        return BookingReferenceAPI.reserve(trainId, availableSeats, bookingRef);
+    return bookingService.reserve(trainId, availableSeats, bookingRef);
     }
 
-    protected String createBookingReference() {
-        String bookingRef;
-        bookingRef = BookingReferenceAPI.createbookingRef();
-        return bookingRef;
+
+  protected String createBookingReference() {
+      return bookingService.createbookingRef();
     }
 
-    protected Train findTrain(String trainId) {
-        return TrainDataAPI.findTrain(trainId);
+  protected Train findTrain(String trainId) {
+        return trainDataRepository.findTrain(trainId);
     }
 
 

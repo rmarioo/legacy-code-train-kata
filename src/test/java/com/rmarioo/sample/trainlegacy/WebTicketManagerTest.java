@@ -15,7 +15,8 @@ public class WebTicketManagerTest
   @Test
   public void when_requested_seats_exceeds_70_availability_return_empty_reservation() throws IOException {
 
-    WebTicketManager webTicketManager = new TestableWebTicketManager();
+    WebTicketManager webTicketManager = new WebTicketManager(new StubTrainDataRepository(),
+        new StubBookingReserveService(true));
     Reservation reservation = webTicketManager.reserve("first", 6);
 
     Assert.assertThat(reservation,is(new Reservation("first","",Arrays.asList())));
@@ -66,6 +67,7 @@ public class WebTicketManagerTest
 
     public TestableWebTicketManager(boolean reservationSuccessfull) {
 
+      super(new DefaultTrainDataRepository(), new DefaultBookingService());
       this.reservationSuccessfull = reservationSuccessfull;
     }
 
@@ -97,6 +99,41 @@ public class WebTicketManagerTest
           new Seat("B",3),
           new Seat("B",4)
       ));
+    }
+  }
+
+  private class StubTrainDataRepository implements TrainDataRepository {
+    @Override
+    public Train findTrain(String trainId) {
+      return new Train("first", Arrays.asList(
+          new Seat("A",1),
+          new Seat("A",2),
+          new Seat("A",3),
+          new Seat("A",4),
+          new Seat("B",1),
+          new Seat("B",2),
+          new Seat("B",3),
+          new Seat("B",4)
+      ));
+    }
+  }
+
+  private class StubBookingReserveService implements BookingService {
+
+    private final boolean reservationSuccessfull;
+
+    public StubBookingReserveService(boolean reservationSuccessfull) {
+      this.reservationSuccessfull = reservationSuccessfull;
+    }
+
+    @Override
+    public String createbookingRef() {
+      return "ref1";
+    }
+
+    @Override
+    public Boolean reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
+      return reservationSuccessfull;
     }
   }
 }

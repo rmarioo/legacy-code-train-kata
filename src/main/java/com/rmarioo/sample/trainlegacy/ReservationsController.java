@@ -22,7 +22,8 @@ public class ReservationsController {
     @PostMapping("api/reservations")
     public ResponseEntity update(@RequestBody RequestDto requestDto) throws IOException {
 
-        WebTicketManager webTicketManager = new WebTicketManager();
+        WebTicketManager webTicketManager = new WebTicketManager(new DefaultTrainDataRepository()
+            , new DefaultBookingService());
         Reservation reservation = webTicketManager.reserve(requestDto.getTrain_id(), requestDto.getNumber_of_seats());
         return (!reservation.availableSeats.isEmpty())
             ? status(200).body(reservation)
