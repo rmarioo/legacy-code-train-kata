@@ -121,7 +121,7 @@ If you want to take a look at one you can look at the branches
 
 - ([master](https://github.com/rmarioo/legacy-code-train-kata)) 
 - ([Step 1 Understand](https://github.com/rmarioo/legacy-code-train-kata/tree/step_1_understand)) 
-- ([Step_2_Vover](https://github.com/rmarioo/legacy-code-train-kata/tree/step_2_cover)) 
+- ([Step_2_Cover](https://github.com/rmarioo/legacy-code-train-kata/tree/step_2_cover)) 
 - ([Step_3_Refactor](https://github.com/rmarioo/legacy-code-train-kata/tree/step_3_refactor)) 
 - ([Step_4_Apply the change](https://github.com/rmarioo/legacy-code-train-kata/tree/step_4_apply_change)) 
 - ([Final result](https://github.com/rmarioo/legacy-code-train-kata/tree/final)) 
