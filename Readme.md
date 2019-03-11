@@ -23,6 +23,8 @@ The previous guys already provided an implementation but it the code is difficul
 is a bug so not all business rules are satisfied.
 You should find the bug and fix it.
 
+
+
 But you have some constraints:
 - You cannot change the code if is not covered by tests ( only few changes are allowed to make 
 the code testables)
@@ -38,6 +40,8 @@ integration tests! )
 should apply the change that fixes the code
 4. apply the change ( it should be and "easy" and "trivial" change so no more than 2 - 3 commits 
 are allowed )
+
+**NOTE:** You work only on WebTicketManager class
 
 
 ### How to launch the TrainApplication
@@ -120,11 +124,11 @@ There is not only one solution to this kata.
 If you want to take a look at one you can look at the branches
 
 - ([master](https://github.com/rmarioo/legacy-code-train-kata)) 
-- ([Step 1 Understand](https://github.com/rmarioo/legacy-code-train-kata/tree/step_1_understand)) 
-- ([Step_2_Cover](https://github.com/rmarioo/legacy-code-train-kata/tree/step_2_cover)) 
-- ([Step_3_Refactor](https://github.com/rmarioo/legacy-code-train-kata/tree/step_3_refactor)) 
-- ([Step_4_Apply the change](https://github.com/rmarioo/legacy-code-train-kata/tree/step_4_apply_change)) 
-- ([Final result](https://github.com/rmarioo/legacy-code-train-kata/tree/final)) 
+- ([Step 1 Understand](https://github.com/rmarioo/legacy-code-train-kata/blob/step_1_understand/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
+- ([Step_2_Cover](https://github.com/rmarioo/legacy-code-train-kata/blob/step_2_cover/src/test/java/com/rmarioo/sample/trainlegacy/WebTicketManagerTest.java)) 
+- ([Step_3_Refactor](https://github.com/rmarioo/legacy-code-train-kata/blob/step_3_refactor/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
+- ([Step_4_Apply the change](https://github.com/rmarioo/legacy-code-train-kata/blob/step_4_apply_change/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
+- ([Final result](https://github.com/rmarioo/legacy-code-train-kata/blob/final/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
 
 
 
