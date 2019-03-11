@@ -21,7 +21,15 @@ overall, no more than 70% of seats may be reserved in advance. However, there is
 
 The previous guys already provided an implementation but it the code is difficult to read and there 
 is a bug so not all business rules are satisfied.
-You should find the bug and fix it but following this steps in order: 
+You should find the bug and fix it.
+
+But you have some constraints:
+- You cannot change the code if is not covered by tests ( only few changes are allowed to make 
+the code testables)
+- You cannot put the code that fixes the bug directly in the actual code, instead you 
+should make a new ( missing domain ) to emerge in new class and then apply the change mainly on this new classes  
+
+It is recommended to follow those steps in order:
 
 1. in order to have a better understanding , do a sketch refactoring and the throw it away
 2. create a safety net of tests to certify the actual behaviuor ( only unit test allowed - no 
@@ -31,16 +39,8 @@ should apply the change that fixes the code
 4. apply the change ( it should be and "easy" and "trivial" change so no more than 2 - 3 commits 
 are allowed )
 
-**NOTE:** you should not put the code that fixes the bug directly in the actual code, instead you 
-should make a new ( missing domain ) to emerge in new class and then apply the change mainly on 
-this new classes  
 
-
-
-
-
-
-### launch TrainApplication
+### How to launch the TrainApplication
 
 Run TrainApplication class
 
@@ -119,10 +119,12 @@ There is not only one solution to this kata.
 
 If you want to take a look at one you can look at the branches
 
-- master  ( the starting point with ugly legacy code )
-- 
-
-
+- ([master](https://github.com/rmarioo/legacy-code-train-kata)) 
+- ([Step 1 Understand](https://github.com/rmarioo/legacy-code-train-kata/tree/step_1_understand)) 
+- ([Step_2_Vover](https://github.com/rmarioo/legacy-code-train-kata/tree/step_2_cover)) 
+- ([Step_3_Refactor](https://github.com/rmarioo/legacy-code-train-kata/tree/step_3_refactor)) 
+- ([Step_4_Apply the change](https://github.com/rmarioo/legacy-code-train-kata/tree/step_4_apply_change)) 
+- ([Final result](https://github.com/rmarioo/legacy-code-train-kata/tree/final)) 
 
 
 
