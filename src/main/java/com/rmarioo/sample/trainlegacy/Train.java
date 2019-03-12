@@ -1,9 +1,11 @@
 package com.rmarioo.sample.trainlegacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Train {
   public List<Coach> coaches;
@@ -63,19 +65,17 @@ public class Train {
   }
 
   public List<Seat> availableSeatsFor(int seats) {
-    List<Seat> availableSeats = new ArrayList<>();
 
-    for (int index = 0, i = 0; index < allSeats().size(); index++) {
+    return firstCoachWithAvailability(seats)
+           .map(coach -> coach.firstAvailableSeats(seats))
+           .orElseGet(() -> Arrays.asList());
 
-      Seat each = allSeats().get(index);
-      if (each.getBookingRef() == "") {
-        i++;
-        if (i <= seats) {
-          availableSeats.add(each);
-        }
-      }
-    }
-    return availableSeats;
+  }
+
+  private Optional<Coach> firstCoachWithAvailability(int seats) {
+    return coaches.stream()
+        .filter(coach -> coach.hasEnoughSeatsFor(seats))
+        .findFirst();
   }
 
   public List<Seat> allSeats() {

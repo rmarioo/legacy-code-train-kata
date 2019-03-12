@@ -50,27 +50,55 @@ public class WebTicketManagerTest
   }
 
   @Test
-  public void sameReservasion_goes_across_different_coaches() throws IOException {
+  public void sameReservasion_doesNotgo_across_different_coaches() throws IOException {
 
     WebTicketManager webTicketManager = new WebTicketManager(new StubTrainDataRepository(),
         new StubBookingReserveService(true));
     Reservation reservation = webTicketManager.reserve("first", 5);
 
-    Assert.assertThat(reservation,is(new Reservation("first","ref1",
-        Arrays.asList(
-            new Seat("A",1),
-            new Seat("A",2),
-            new Seat("A",3),
-            new Seat("A",4),
-            new Seat("B",1)
-        ))));
+    Assert.assertThat(reservation,is(new Reservation("first","",Arrays.asList())));
+  }
+
+
+  @Test
+  public void sameReservasion_goes_across_different_coaches_2() throws IOException {
+
+    List<Seat> seats = Arrays.asList(
+        new Seat("A", 1, "ref0"),
+        new Seat("A", 2, "ref0"),
+        new Seat("A", 3, "ref0"),
+        new Seat("A", 4),
+        new Seat("B", 1),
+        new Seat("B", 2),
+        new Seat("B", 3),
+        new Seat("B", 4));
+    WebTicketManager webTicketManager = new WebTicketManager(new StubTrainDataRepository(seats),
+        new StubBookingReserveService(true));
+    Reservation reservation = webTicketManager.reserve("first", 2);
+
+    Assert.assertThat(reservation,is(new Reservation("first","ref1",Arrays.asList(
+        new Seat("B", 1, "ref1"),
+        new Seat("B", 2, "ref1"))
+    )));
   }
 
 
   private class StubTrainDataRepository implements TrainDataRepository {
+
+    private  List<Seat> seats;
+
+    public StubTrainDataRepository() {
+    }
+
+    public StubTrainDataRepository(List<Seat> seats) {
+      this.seats = seats;
+    }
+
     @Override
     public Train findTrain(String trainId) {
-      return new Train("first", Arrays.asList(
+      return seats != null ? new Train("first",seats)
+          :
+          new Train("first", Arrays.asList(
           new Seat("A",1),
           new Seat("A",2),
           new Seat("A",3),
@@ -98,6 +126,9 @@ public class WebTicketManagerTest
 
     @Override
     public Boolean reserve(String trainId, List<Seat> availableSeats, String bookingRef) {
+      for (Seat availableSeat : availableSeats) {
+        availableSeat.setBookingRef(bookingRef);
+      }
       return reservationSuccessfull;
     }
   }
