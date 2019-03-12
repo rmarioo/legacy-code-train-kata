@@ -127,7 +127,7 @@ If you want to take a look at one you can look at the branches
 - ([Step 1 Understand](https://github.com/rmarioo/legacy-code-train-kata/blob/step_1_understand/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
 - ([Step_2_Cover](https://github.com/rmarioo/legacy-code-train-kata/blob/step_2_cover/src/test/java/com/rmarioo/sample/trainlegacy/WebTicketManagerTest.java)) 
 - ([Step_3_Refactor](https://github.com/rmarioo/legacy-code-train-kata/blob/step_3_refactor/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
-- ([Step_4_Apply the change](https://github.com/rmarioo/legacy-code-train-kata/blob/step_4_apply_change/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
+- ([Step_4_Apply the change](https://github.com/rmarioo/legacy-code-train-kata/blob/step_4_change/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
 - ([Final result](https://github.com/rmarioo/legacy-code-train-kata/blob/final/src/main/java/com/rmarioo/sample/trainlegacy/WebTicketManager.java)) 
 
 
