@@ -23,9 +23,7 @@ public class WebTicketManager
 
     Train train = trainDataRepository.findTrain(trainName);
 
-    if (train.requestDoesnotExceeds70perc(requestedSeats) &&
-        train.enoughAvailableSeats(requestedSeats) &&
-        train.coaches.stream().anyMatch(coach -> coach.hasEnoughSeatsFor(requestedSeats)))
+    if (train.hasAvailabilityFor(requestedSeats))
     {
       List<Seat> availableSeats = train.availableSeatsFor(requestedSeats);
 

@@ -90,4 +90,13 @@ public class Train {
     return availableSeatsFor(requestedSeats).size() >= requestedSeats;
   }
 
+  protected boolean hasCoachWithAvailableSeatsFor(int requestedSeats) {
+    return coaches.stream().anyMatch(coach -> coach.hasEnoughSeatsFor(requestedSeats));
+  }
+
+  protected boolean hasAvailabilityFor(int requestedSeats) {
+    return requestDoesnotExceeds70perc(requestedSeats) &&
+        enoughAvailableSeats(requestedSeats) &&
+        hasCoachWithAvailableSeatsFor(requestedSeats);
+  }
 }
