@@ -1,7 +1,9 @@
 package com.rmarioo.sample.trainlegacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Coach {
 
@@ -30,5 +32,15 @@ public class Coach {
   public boolean hasEnoughSeatsFor(int requestedSeats) {
     long availableSeats = seats.stream().filter(seat -> !seat.hasReservation()).count();
     return availableSeats >= requestedSeats;
+  }
+
+  public List<Seat> firstAvailableSeats(int requestedSeats) {
+
+    List<Seat> allAvailable = this.seats.stream()
+        .filter(seat -> !seat.hasReservation())
+        .limit(requestedSeats)
+        .collect(Collectors.toList());
+
+    return allAvailable.size() == requestedSeats ? allAvailable : Arrays.asList();
   }
 }
